@@ -24,8 +24,16 @@ function App({}: AppProps) {
     if (term) {
       axios.delete(`http://localhost:3000/${term}/${id}`).then((res) => {
         console.log(res);
+        getPlayers();
       });
     }
+  };
+
+  const getPlayers = () => {
+    axios.get('http://localhost:3000/players').then((res: AxiosResponse) => {
+      const data: Array<PlayerObject> = res.data;
+      setPlayers(data);
+    });
   };
 
   useEffect(() => {
@@ -33,7 +41,7 @@ function App({}: AppProps) {
       const data: Array<PlayerObject> = res.data;
       setPlayers(data);
     });
-  }, []);
+  }, [players]);
 
   return (
     <PlayersContext.Provider value={{ players, setPlayers }}>
