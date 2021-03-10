@@ -7,6 +7,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  tableCell: {
+    padding: '0px 8px',
+  },
+});
 
 const Players = () => {
   return (
@@ -14,9 +21,21 @@ const Players = () => {
       <TableContainer component={Paper}>
         <TableHead>
           <TableRow>
-            <TableCell>Player Name</TableCell>
-            <TableCell>Team</TableCell>
-            <TableCell>Remove Player</TableCell>
+            <TableCell
+              style={{ width: '30vw', textAlign: 'center', fontWeight: 'bold' }}
+            >
+              Player Name
+            </TableCell>
+            <TableCell
+              style={{ width: '30vw', textAlign: 'center', fontWeight: 'bold' }}
+            >
+              Team
+            </TableCell>
+            <TableCell
+              style={{ width: '30vw', textAlign: 'center', fontWeight: 'bold' }}
+            >
+              Remove Player
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

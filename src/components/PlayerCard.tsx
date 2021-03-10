@@ -12,11 +12,11 @@ const PlayerCard = (props: Props) => {
   const { player_name, team_name } = props.player;
   return (
     <>
-      <TableCell component="th" scope="row">
+      <TableCell style={{ textAlign: 'center' }} component="th" scope="row">
         {player_name}
       </TableCell>
-      <TableCell>{team_name}</TableCell>
-      <TableCell>
+      <TableCell style={{ textAlign: 'center' }}>{team_name}</TableCell>
+      <TableCell style={{ textAlign: 'center' }}>
         <IconButton aria-label="delete">
           <DeleteIcon />
         </IconButton>
