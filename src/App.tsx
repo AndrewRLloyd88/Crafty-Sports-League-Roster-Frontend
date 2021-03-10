@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
+
+//import components
 import Teams from './components/Teams';
 import Players from './components/Players';
+import Navbar from './components/Navbar';
 
 //import interfaces
 import type { PlayerObject } from './interfaces/PlayerObject';
 
-//import css
-import './App.css';
-
+//import context
 import { PlayersContext } from './data/PlayersContext';
 
 interface AppProps {}
@@ -28,6 +29,7 @@ function App({}: AppProps) {
 
   return (
     <PlayersContext.Provider value={{ players, setPlayers }}>
+      <Navbar />
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Teams} />
