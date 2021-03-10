@@ -31,10 +31,12 @@ function App({}: AppProps) {
     <PlayersContext.Provider value={{ players, setPlayers }}>
       <Navbar />
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Teams} />
-          <Route exact path="/players" component={Players} />
-        </Switch>
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={Teams} />
+            <Route exact path="/players" component={Players} />
+          </Switch>
+        </div>
       </BrowserRouter>
     </PlayersContext.Provider>
   );
