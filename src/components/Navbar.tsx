@@ -1,12 +1,22 @@
-import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import React, { useState } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/HomeOutlined';
+import { BrowserRouter, Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,9 +71,21 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
 }));
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
   const classes = useStyles();
 
   return (
@@ -75,6 +97,7 @@ const Navbar = () => {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
+            onClick={toggleDrawer}
           >
             <MenuIcon />
           </IconButton>
@@ -96,6 +119,46 @@ const Navbar = () => {
           </div>
         </Toolbar>
       </AppBar>
+      <Drawer
+        open={open}
+        onClose={toggleDrawer}
+        anchor={'top'}
+        style={{ width: 300 }}
+      >
+        <BrowserRouter>
+          <Typography align="center">
+            <List>
+              <ListItem>
+                <Link to="/">
+                  <ListItemText>
+                    <Button color="secondary" onClick={toggleDrawer}>
+                      <HomeIcon /> Home
+                    </Button>
+                  </ListItemText>
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link to="/">
+                  <ListItemText>
+                    <Button color="secondary" onClick={toggleDrawer}>
+                      <HomeIcon /> Players
+                    </Button>
+                  </ListItemText>
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link to="/">
+                  <ListItemText>
+                    <Button color="secondary" onClick={toggleDrawer}>
+                      <CloseIcon /> Close
+                    </Button>
+                  </ListItemText>
+                </Link>
+              </ListItem>
+            </List>
+          </Typography>
+        </BrowserRouter>
+      </Drawer>
     </div>
   );
 };
