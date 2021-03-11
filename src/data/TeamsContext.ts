@@ -1,8 +1,8 @@
 import React, { createContext, Dispatch, SetStateAction } from 'react';
 import type { TeamsObject } from '../interfaces/TeamsObject';
 
-export interface ContextState {
-  players: Array<TeamsObject>;
+interface ContextState {
+  teams: Array<TeamsObject>;
   setTeams: Dispatch<SetStateAction<any>>;
 }
 
