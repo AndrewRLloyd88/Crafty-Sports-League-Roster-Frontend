@@ -10,7 +10,6 @@ interface Props {
 }
 
 const PlayerCard = (props: Props) => {
-  console.log(props);
   const { player_name, team_name, id } = props.player;
   return (
     <>
@@ -25,7 +24,6 @@ const PlayerCard = (props: Props) => {
               <>
                 <IconButton
                   onClick={() => {
-                    console.log(id);
                     deleteUtility.deleteEntity(id, 'players');
                   }}
                   aria-label="delete"

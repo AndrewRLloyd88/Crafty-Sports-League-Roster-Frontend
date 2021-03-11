@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 
 //import components
 import Teams from './components/Teams';
@@ -18,6 +20,7 @@ interface AppProps {}
 
 function App({}: AppProps) {
   const [players, setPlayers] = useState({} as PlayerObject[]);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   //takes in a term such as player/team and an id then performs delete
   const deleteEntity = (id: number, term: string) => {
@@ -25,6 +28,7 @@ function App({}: AppProps) {
       axios.delete(`http://localhost:3000/${term}/${id}`).then((res) => {
         console.log(res);
         getPlayers();
+        setAlertOpen(true);
       });
     }
   };
@@ -36,12 +40,17 @@ function App({}: AppProps) {
     });
   };
 
+  //Alert logic
+  const handleAlertClose = () => {
+    setAlertOpen(false);
+  };
+
   useEffect(() => {
     axios.get('http://localhost:3000/players').then((res: AxiosResponse) => {
       const data: Array<PlayerObject> = res.data;
       setPlayers(data);
     });
-  }, [players]);
+  }, []);
 
   return (
     <PlayersContext.Provider value={{ players, setPlayers }}>
@@ -53,6 +62,15 @@ function App({}: AppProps) {
               <Route exact path="/" component={Teams} />
               <Route exact path="/players" component={Players} />
             </Switch>
+            <Snackbar
+              open={alertOpen}
+              autoHideDuration={3000}
+              onClose={handleAlertClose}
+            >
+              <Alert severity="success" onClose={handleAlertClose}>
+                Player Deleted
+              </Alert>
+            </Snackbar>
           </div>
         </BrowserRouter>
       </UtilitiesContext.Provider>
