@@ -10,7 +10,7 @@ const Teams: any = () => {
       return <div key={idx}>{team.team_name}</div>;
     })
   ) : (
-    <div>Loading...</div>
+    <h4>Loading...</h4>
   );
 };
 
