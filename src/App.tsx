@@ -12,11 +12,13 @@ import Navbar from './components/Navbar';
 //import interfaces
 import type { PlayerObject } from './interfaces/PlayerObject';
 import type { TeamsObject } from './interfaces/TeamsObject';
+import type { PlayerTeamObj } from './interfaces/PlayerTeamObject';
 
 //import context
 import { PlayersContext } from './data/PlayersContext';
 import { TeamsContext } from './data/TeamsContext';
 import { UtilitiesContext } from './data/UtilitiesContext';
+import { PlayerTeamsContext } from './data/PlayerTeamsContext';
 
 interface AppProps {}
 
@@ -25,6 +27,9 @@ function App({}: AppProps) {
   const [players, setPlayers] = useState({} as PlayerObject[]);
   const [alertOpen, setAlertOpen] = useState(false);
   const [teams, setTeams] = useState({} as TeamsObject[]);
+  const [playerTeams, setPlayerTeams] = useState({});
+  const teamLength = Object.keys(teams).length;
+  const playerLength = Object.keys(players).length;
 
   //takes in a term such as player/team and an id then performs delete
   const deleteEntity = (id: number, term: string) => {
@@ -41,6 +46,7 @@ function App({}: AppProps) {
     }
   };
 
+  //creates a new player based on user input
   const createPlayer = (playerName: string, teamID: number) => {
     console.log(playerName, teamID);
   };
@@ -60,11 +66,33 @@ function App({}: AppProps) {
     });
   };
 
+  //currently unused -- TODO Consider Removal
   const getPlayersByTeamId = (id: number) => {
-    const teamObj = {};
     axios.get(`localhost:3000/teams/${id}`).then((res) => {
       console.log(res);
     });
+  };
+
+  //helper function to build an object containing players and the teams they belong to
+  const buildPlayerTeams = () => {
+    let playerTeamObj: PlayerTeamObj = {};
+    for (let keys in teams) {
+      const teamNames = teams[keys].team_name;
+      playerTeamObj[teamNames] = [];
+    }
+    addPlayersToTeams(playerTeamObj);
+  };
+
+  //helper function responsible for adding each player to a team
+  const addPlayersToTeams = (playerTeams: PlayerTeamObj) => {
+    const tempPlayerTeams = playerTeams;
+    for (let key in players) {
+      const playerTeamNames = players[key].team_name;
+      if (tempPlayerTeams.hasOwnProperty(playerTeamNames)) {
+        tempPlayerTeams[playerTeamNames].push(players[key]);
+      }
+    }
+    setPlayerTeams(tempPlayerTeams);
   };
 
   //Alert logic
@@ -75,32 +103,35 @@ function App({}: AppProps) {
   useEffect(() => {
     getTeams();
     getPlayers();
-  }, []);
+    buildPlayerTeams();
+  }, [teamLength, playerLength]);
 
   return (
     <BrowserRouter>
       <TeamsContext.Provider value={{ teams, setTeams }}>
         <PlayersContext.Provider value={{ players, setPlayers }}>
-          <UtilitiesContext.Provider
-            value={{ deleteEntity, createPlayer, getPlayersByTeamId }}
-          >
-            <Navbar />
-            <div className="container">
-              <Switch>
-                <Route exact path="/" component={Teams} />
-                <Route exact path="/players" component={Players} />
-              </Switch>
-              <Snackbar
-                open={alertOpen}
-                autoHideDuration={3000}
-                onClose={handleAlertClose}
-              >
-                <Alert severity="success" onClose={handleAlertClose}>
-                  Player Deleted
-                </Alert>
-              </Snackbar>
-            </div>
-          </UtilitiesContext.Provider>
+          <PlayerTeamsContext.Provider value={{ playerTeams, setPlayerTeams }}>
+            <UtilitiesContext.Provider
+              value={{ deleteEntity, createPlayer, getPlayersByTeamId }}
+            >
+              <Navbar />
+              <div className="container">
+                <Switch>
+                  <Route exact path="/" component={Teams} />
+                  <Route exact path="/players" component={Players} />
+                </Switch>
+                <Snackbar
+                  open={alertOpen}
+                  autoHideDuration={3000}
+                  onClose={handleAlertClose}
+                >
+                  <Alert severity="success" onClose={handleAlertClose}>
+                    Player Deleted
+                  </Alert>
+                </Snackbar>
+              </div>
+            </UtilitiesContext.Provider>
+          </PlayerTeamsContext.Provider>
         </PlayersContext.Provider>
       </TeamsContext.Provider>
     </BrowserRouter>
