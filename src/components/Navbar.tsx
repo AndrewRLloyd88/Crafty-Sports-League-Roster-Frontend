@@ -125,39 +125,35 @@ const Navbar = () => {
         anchor={'top'}
         style={{ width: 300 }}
       >
-        <BrowserRouter>
-          <Typography align="center">
-            <List>
-              <ListItem>
-                <Link to="/">
-                  <ListItemText>
-                    <Button color="secondary" onClick={toggleDrawer}>
-                      <HomeIcon /> Home
-                    </Button>
-                  </ListItemText>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to="/">
-                  <ListItemText>
-                    <Button color="secondary" onClick={toggleDrawer}>
-                      <HomeIcon /> Players
-                    </Button>
-                  </ListItemText>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to="/">
-                  <ListItemText>
-                    <Button color="secondary" onClick={toggleDrawer}>
-                      <CloseIcon /> Close
-                    </Button>
-                  </ListItemText>
-                </Link>
-              </ListItem>
-            </List>
-          </Typography>
-        </BrowserRouter>
+        <Typography align="center">
+          <List>
+            <ListItem>
+              <Link to="/">
+                <ListItemText>
+                  <Button color="secondary" onClick={toggleDrawer}>
+                    <HomeIcon /> Home
+                  </Button>
+                </ListItemText>
+              </Link>
+            </ListItem>
+            <ListItem>
+              <Link to="/players">
+                <ListItemText>
+                  <Button color="secondary" onClick={toggleDrawer}>
+                    <HomeIcon /> Players
+                  </Button>
+                </ListItemText>
+              </Link>
+            </ListItem>
+            <ListItem>
+              <ListItemText>
+                <Button color="secondary" onClick={toggleDrawer}>
+                  <CloseIcon /> Close
+                </Button>
+              </ListItemText>
+            </ListItem>
+          </List>
+        </Typography>
       </Drawer>
     </div>
   );

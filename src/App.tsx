@@ -50,10 +50,10 @@ function App({}: AppProps) {
   }, []);
 
   return (
-    <PlayersContext.Provider value={{ players, setPlayers }}>
-      <UtilitiesContext.Provider value={{ deleteEntity }}>
-        <Navbar />
-        <BrowserRouter>
+    <BrowserRouter>
+      <PlayersContext.Provider value={{ players, setPlayers }}>
+        <UtilitiesContext.Provider value={{ deleteEntity }}>
+          <Navbar />
           <div className="container">
             <Switch>
               <Route exact path="/" component={Teams} />
@@ -69,9 +69,9 @@ function App({}: AppProps) {
               </Alert>
             </Snackbar>
           </div>
-        </BrowserRouter>
-      </UtilitiesContext.Provider>
-    </PlayersContext.Provider>
+        </UtilitiesContext.Provider>
+      </PlayersContext.Provider>
+    </BrowserRouter>
   );
 }
 
