@@ -42,7 +42,7 @@ function App({}: AppProps) {
   };
 
   const createPlayer = (playerName: string, teamID: number) => {
-    console.log(playerName, teamName);
+    console.log(playerName, teamID);
   };
 
   //getters for main entities
