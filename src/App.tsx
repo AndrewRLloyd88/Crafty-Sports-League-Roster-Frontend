@@ -41,13 +41,14 @@ function App({}: AppProps) {
     }
   };
 
-  const createEntity = (playerName: string, teamName: string) => {
+  const createPlayer = (playerName: string, teamID: number) => {
     console.log(playerName, teamName);
   };
 
+  //getters for main entities
   const getTeams = () => {
-    axios.get('http://localhost:3000/').then((res: AxiosResponse) => {
-      const data: Array<PlayerObject> = res.data;
+    axios.get('http://localhost:3000/teams').then((res: AxiosResponse) => {
+      const data: Array<TeamsObject> = res.data;
       setTeams(data);
     });
   };
@@ -65,31 +66,34 @@ function App({}: AppProps) {
   };
 
   useEffect(() => {
+    getTeams();
     getPlayers();
   }, []);
 
   return (
     <BrowserRouter>
-      <PlayersContext.Provider value={{ players, setPlayers }}>
-        <UtilitiesContext.Provider value={{ deleteEntity, createEntity }}>
-          <Navbar />
-          <div className="container">
-            <Switch>
-              <Route exact path="/" component={Teams} />
-              <Route exact path="/players" component={Players} />
-            </Switch>
-            <Snackbar
-              open={alertOpen}
-              autoHideDuration={3000}
-              onClose={handleAlertClose}
-            >
-              <Alert severity="success" onClose={handleAlertClose}>
-                Player Deleted
-              </Alert>
-            </Snackbar>
-          </div>
-        </UtilitiesContext.Provider>
-      </PlayersContext.Provider>
+      <TeamsContext.Provider value={{ teams, setTeams }}>
+        <PlayersContext.Provider value={{ players, setPlayers }}>
+          <UtilitiesContext.Provider value={{ deleteEntity, createPlayer }}>
+            <Navbar />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Teams} />
+                <Route exact path="/players" component={Players} />
+              </Switch>
+              <Snackbar
+                open={alertOpen}
+                autoHideDuration={3000}
+                onClose={handleAlertClose}
+              >
+                <Alert severity="success" onClose={handleAlertClose}>
+                  Player Deleted
+                </Alert>
+              </Snackbar>
+            </div>
+          </UtilitiesContext.Provider>
+        </PlayersContext.Provider>
+      </TeamsContext.Provider>
     </BrowserRouter>
   );
 }
