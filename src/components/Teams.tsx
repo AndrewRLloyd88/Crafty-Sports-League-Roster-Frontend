@@ -11,17 +11,16 @@ const Teams: any = () => {
   const playerTeams = useContext(PlayerTeamsContext);
   console.log(playerTeams);
 
-  // return Object.keys(teams.teams).length > 1 ? (
-  //   teams.teams.map((team, idx) => {
-  //     return <div key={idx}>{team.team_name}</div>;
-  //   })
-  // ) : (
-  //   <h4>Loading...</h4>
-  // );
-
   return Object.keys(playerTeams.playerTeams).length > 1 ? (
     Object.entries(playerTeams.playerTeams).map(([team, players], idx) => {
-      return <div>{team.toString()}</div>;
+      return (
+        <>
+          <div key={idx}>{team.toString()}</div>
+          {players.map((player, idx) => {
+            return <div key={idx}>{player.player_name}</div>;
+          })}
+        </>
+      );
     })
   ) : (
     <h4>Loading...</h4>
