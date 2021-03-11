@@ -15,62 +15,67 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import AddPlayer from './AddPlayer';
+
 const Players = () => {
   return (
-    <div className="playersTable">
-      <TableContainer component={Paper}>
-        <table>
-          <TableHead>
-            <TableRow>
-              <TableCell
-                style={{
-                  width: '30vw',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
-                Player Name
-              </TableCell>
-              <TableCell
-                style={{
-                  width: '30vw',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
-                Team
-              </TableCell>
-              <TableCell
-                style={{
-                  width: '30vw',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
-                Remove Player
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <PlayersContext.Consumer>
-              {(players) =>
-                players && (
-                  <>
-                    {players.players.map((player, idx) => {
-                      return (
-                        <TableRow key={idx}>
-                          <PlayerCard player={player} key={idx} />
-                        </TableRow>
-                      );
-                    })}
-                  </>
-                )
-              }
-            </PlayersContext.Consumer>
-          </TableBody>
-        </table>
-      </TableContainer>
-    </div>
+    <>
+      <AddPlayer />
+      <div className="playersTable">
+        <TableContainer component={Paper}>
+          <table>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  style={{
+                    width: '30vw',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Player Name
+                </TableCell>
+                <TableCell
+                  style={{
+                    width: '30vw',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Team
+                </TableCell>
+                <TableCell
+                  style={{
+                    width: '30vw',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Remove Player
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <PlayersContext.Consumer>
+                {(players) =>
+                  players && (
+                    <>
+                      {players.players.map((player, idx) => {
+                        return (
+                          <TableRow key={idx}>
+                            <PlayerCard player={player} key={idx} />
+                          </TableRow>
+                        );
+                      })}
+                    </>
+                  )
+                }
+              </PlayersContext.Consumer>
+            </TableBody>
+          </table>
+        </TableContainer>
+      </div>
+    </>
   );
 };
 
