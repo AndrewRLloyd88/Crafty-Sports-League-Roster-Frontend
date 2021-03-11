@@ -1,4 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
+import TeamPlayerCard from './TeamPlayerCard';
 
 //import contexts
 import { TeamsContext } from '../data/TeamsContext';
@@ -13,14 +14,7 @@ const Teams: any = () => {
 
   return Object.keys(playerTeams.playerTeams).length > 1 ? (
     Object.entries(playerTeams.playerTeams).map(([team, players], idx) => {
-      return (
-        <>
-          <div key={idx}>{team.toString()}</div>
-          {players.map((player, idx) => {
-            return <div key={idx}>{player.player_name}</div>;
-          })}
-        </>
-      );
+      return <TeamPlayerCard key={idx} team={team} players={players} />;
     })
   ) : (
     <h4>Loading...</h4>
