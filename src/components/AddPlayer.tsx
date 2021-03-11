@@ -73,48 +73,50 @@ const AddPlayer = () => {
             </TableCell>
           </TableRow>
         </TableHead>
-        <TableRow>
-          <TableCell
-            style={{
-              width: '30vw',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}
-          >
-            <input
-              value={playerName}
-              onChange={(event) => handleChange(event)}
-              placeholder="enter player name"
-            ></input>
-          </TableCell>
-          <TableCell
-            style={{
-              width: '30vw',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}
-          >
-            <select></select>
-          </TableCell>
-          <TableCell
-            style={{
-              width: '30vw',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}
-          >
-            <button>Confirm</button>
-          </TableCell>
-          <TableCell
-            style={{
-              width: '30vw',
-              textAlign: 'center',
-              fontWeight: 'bold',
-            }}
-          >
-            <button onClick={toggleAddPlayer}>Cancel</button>
-          </TableCell>
-        </TableRow>
+        <TableBody>
+          <TableRow>
+            <TableCell
+              style={{
+                width: '30vw',
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}
+            >
+              <input
+                value={playerName}
+                onChange={(event) => handleChange(event)}
+                placeholder="enter player name"
+              ></input>
+            </TableCell>
+            <TableCell
+              style={{
+                width: '30vw',
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}
+            >
+              <select></select>
+            </TableCell>
+            <TableCell
+              style={{
+                width: '30vw',
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}
+            >
+              <button>Confirm</button>
+            </TableCell>
+            <TableCell
+              style={{
+                width: '30vw',
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}
+            >
+              <button onClick={toggleAddPlayer}>Cancel</button>
+            </TableCell>
+          </TableRow>
+        </TableBody>
       </table>
     </TableContainer>
   ) : (
