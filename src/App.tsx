@@ -46,10 +46,7 @@ function App({}: AppProps) {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:3000/players').then((res: AxiosResponse) => {
-      const data: Array<PlayerObject> = res.data;
-      setPlayers(data);
-    });
+    getPlayers();
   }, []);
 
   return (
