@@ -60,6 +60,13 @@ function App({}: AppProps) {
     });
   };
 
+  const getPlayersByTeamId = (id: number) => {
+    const teamObj = {};
+    axios.get(`localhost:3000/teams/${id}`).then((res) => {
+      console.log(res);
+    });
+  };
+
   //Alert logic
   const handleAlertClose = () => {
     setAlertOpen(false);
@@ -74,7 +81,9 @@ function App({}: AppProps) {
     <BrowserRouter>
       <TeamsContext.Provider value={{ teams, setTeams }}>
         <PlayersContext.Provider value={{ players, setPlayers }}>
-          <UtilitiesContext.Provider value={{ deleteEntity, createPlayer }}>
+          <UtilitiesContext.Provider
+            value={{ deleteEntity, createPlayer, getPlayersByTeamId }}
+          >
             <Navbar />
             <div className="container">
               <Switch>

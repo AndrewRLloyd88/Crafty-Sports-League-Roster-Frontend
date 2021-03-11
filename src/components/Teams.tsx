@@ -1,13 +1,17 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { TeamsContext } from '../data/TeamsContext';
 
-const Home = () => {
-  return (
-    <div>
-      <h1>Crafty MotorSports League Roster</h1>
-      <Link to="/players">Players</Link>
-    </div>
+const Teams: any = () => {
+  const teams = useContext(TeamsContext);
+  console.log(teams);
+
+  return Object.keys(teams.teams).length > 1 ? (
+    teams.teams.map((team, idx) => {
+      return <div key={idx}>{team.team_name}</div>;
+    })
+  ) : (
+    <div>Loading...</div>
   );
 };
 
-export default Home;
+export default Teams;

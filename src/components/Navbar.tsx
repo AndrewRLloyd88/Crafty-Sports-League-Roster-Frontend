@@ -11,12 +11,11 @@ import {
   IconButton,
   Button,
   Drawer,
-  List,
   ListItem,
   ListItemText,
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -125,35 +124,31 @@ const Navbar = () => {
         anchor={'top'}
         style={{ width: 300 }}
       >
-        <Typography align="center">
-          <List>
-            <ListItem>
-              <Link to="/">
-                <ListItemText>
-                  <Button color="secondary" onClick={toggleDrawer}>
-                    <HomeIcon /> Home
-                  </Button>
-                </ListItemText>
-              </Link>
-            </ListItem>
-            <ListItem>
-              <Link to="/players">
-                <ListItemText>
-                  <Button color="secondary" onClick={toggleDrawer}>
-                    <HomeIcon /> Players
-                  </Button>
-                </ListItemText>
-              </Link>
-            </ListItem>
-            <ListItem>
-              <ListItemText>
-                <Button color="secondary" onClick={toggleDrawer}>
-                  <CloseIcon /> Close
-                </Button>
-              </ListItemText>
-            </ListItem>
-          </List>
-        </Typography>
+        <ListItem>
+          <Link to="/">
+            <ListItemText>
+              <Button color="secondary" onClick={toggleDrawer}>
+                <HomeIcon /> Home
+              </Button>
+            </ListItemText>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/players">
+            <ListItemText>
+              <Button color="secondary" onClick={toggleDrawer}>
+                <HomeIcon /> Players
+              </Button>
+            </ListItemText>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListItemText>
+            <Button color="secondary" onClick={toggleDrawer}>
+              <CloseIcon /> Close
+            </Button>
+          </ListItemText>
+        </ListItem>
       </Drawer>
     </div>
   );
