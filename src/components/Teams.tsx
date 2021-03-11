@@ -10,12 +10,11 @@ const Teams: any = () => {
   const teams = useContext(TeamsContext);
   const utils = useContext(UtilitiesContext);
   const playerTeams = useContext(PlayerTeamsContext);
-  console.log(playerTeams);
 
   return Object.keys(playerTeams.playerTeams).length > 1 ? (
     Object.entries(playerTeams.playerTeams).map(([team, players], idx) => {
       return (
-        <div className="teamPlayerTable">
+        <div key={idx} className="teamPlayerTable">
           <TeamPlayerCard
             key={idx}
             team={team}

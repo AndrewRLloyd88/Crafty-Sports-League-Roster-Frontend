@@ -48,38 +48,37 @@ const useStyles = makeStyles({
 
 const TeamPlayerCard = (props: Props) => {
   const { team, players, teamIndex } = props;
-  console.log(team);
-  console.log(players);
-  console.log(teamIndex);
   const classes = useStyles();
 
   useEffect(() => {}, [props]);
 
   return (
-    <Card className={classes.root}>
+    <Card>
       <CardContent>
-        <Typography className={classes.title} color="textPrimary" gutterBottom>
-          <div className="team-header">
-            {team.toString()}
-            <UtilitiesContext.Consumer>
-              {(deleteUtility) =>
-                deleteUtility && (
-                  <>
-                    <Button
-                      onClick={() => {
-                        deleteUtility.deleteEntity(teamIndex, 'teams');
-                      }}
-                      variant="contained"
-                      color="secondary"
-                      startIcon={<DeleteIcon />}
-                    >
-                      Delete Team
-                    </Button>
-                  </>
-                )
-              }
-            </UtilitiesContext.Consumer>
-          </div>
+        <Typography
+          className={`team-header ${classes.title}`}
+          color="textPrimary"
+          gutterBottom
+        >
+          {team.toString()}
+          <UtilitiesContext.Consumer>
+            {(deleteUtility) =>
+              deleteUtility && (
+                <>
+                  <Button
+                    onClick={() => {
+                      deleteUtility.deleteEntity(teamIndex, 'teams');
+                    }}
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete Team
+                  </Button>
+                </>
+              )
+            }
+          </UtilitiesContext.Consumer>
         </Typography>
         <TableContainer component={Paper}>
           <table>
@@ -87,7 +86,7 @@ const TeamPlayerCard = (props: Props) => {
               <TableRow>
                 <TableCell
                   style={{
-                    width: '30vw',
+                    width: '50vw',
                     textAlign: 'center',
                     fontWeight: 'bold',
                   }}
@@ -96,7 +95,7 @@ const TeamPlayerCard = (props: Props) => {
                 </TableCell>
                 <TableCell
                   style={{
-                    width: '30vw',
+                    width: '50vw',
                     textAlign: 'center',
                     fontWeight: 'bold',
                   }}

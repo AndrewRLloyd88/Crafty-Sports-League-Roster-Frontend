@@ -56,7 +56,6 @@ function App({}: AppProps) {
 
   //getters for main entities
   const getTeams = () => {
-    console.log('trigger 1');
     axios.get('http://localhost:3000/teams').then((res: AxiosResponse) => {
       const data: Array<TeamsObject> = res.data;
       setTeams(data);
@@ -64,7 +63,6 @@ function App({}: AppProps) {
   };
 
   const getPlayers = () => {
-    console.log('trigger 2');
     axios.get('http://localhost:3000/players').then((res: AxiosResponse) => {
       const data: Array<PlayerObject> = res.data;
       setPlayers(data);
@@ -73,7 +71,6 @@ function App({}: AppProps) {
 
   //helper function to build an object containing players and the teams they belong to
   const buildPlayerTeams = () => {
-    console.log('trigger 3');
     let playerTeamObj: PlayerTeamObj = {};
     for (let keys in teams) {
       const teamNames = teams[keys].team_name;
@@ -87,14 +84,14 @@ function App({}: AppProps) {
 
   //helper function responsible for adding each player to a team
   const addPlayersToTeams = (playerTeams: PlayerTeamObj) => {
-    console.log('trigger 4');
     const tempPlayerTeams = playerTeams;
     for (let key in players) {
       const playerTeamNames = players[key].team_name;
+      const playerData = players[key];
+
       if (tempPlayerTeams.hasOwnProperty(playerTeamNames)) {
-        tempPlayerTeams[playerTeamNames].players.push(players[key]);
+        tempPlayerTeams[playerTeamNames].players.push(playerData);
       }
-      console.log(tempPlayerTeams);
     }
     setPlayerTeams(tempPlayerTeams);
   };
