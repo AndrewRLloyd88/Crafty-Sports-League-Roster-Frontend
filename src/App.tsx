@@ -11,16 +11,20 @@ import Navbar from './components/Navbar';
 
 //import interfaces
 import type { PlayerObject } from './interfaces/PlayerObject';
+import type { TeamsObject } from './interfaces/TeamsObject';
 
 //import context
 import { PlayersContext } from './data/PlayersContext';
+import { TeamsContext } from './data/TeamsContext';
 import { UtilitiesContext } from './data/UtilitiesContext';
 
 interface AppProps {}
 
 function App({}: AppProps) {
+  //states
   const [players, setPlayers] = useState({} as PlayerObject[]);
   const [alertOpen, setAlertOpen] = useState(false);
+  const [teams, setTeams] = useState({} as TeamsObject[]);
 
   //takes in a term such as player/team and an id then performs delete
   const deleteEntity = (id: number, term: string) => {
@@ -39,6 +43,13 @@ function App({}: AppProps) {
 
   const createEntity = (playerName: string, teamName: string) => {
     console.log(playerName, teamName);
+  };
+
+  const getTeams = () => {
+    axios.get('http://localhost:3000/').then((res: AxiosResponse) => {
+      const data: Array<PlayerObject> = res.data;
+      setTeams(data);
+    });
   };
 
   const getPlayers = () => {

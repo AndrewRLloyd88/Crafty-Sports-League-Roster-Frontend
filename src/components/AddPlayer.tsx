@@ -19,6 +19,7 @@ const AddPlayer = () => {
     setIsAddingPlayer(!isAddingPlayer);
   };
 
+  // watches for changes from the player name input field
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event) {
       setPlayerName(event.target.value);
