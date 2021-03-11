@@ -1,19 +1,34 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useContext } from 'react';
+
+// import MUI specific modules
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { IconButton } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 //import types
 import type { PlayerObject } from '../interfaces/PlayerObject';
 
+//import context
+import { UtilitiesContext } from '../data/UtilitiesContext';
+
+//props
 interface Props {
   team: string;
   players: PlayerObject[];
+  teamIndex: number;
 }
 
+//style for table
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -32,19 +47,102 @@ const useStyles = makeStyles({
 });
 
 const TeamPlayerCard = (props: Props) => {
-  const { team, players } = props;
+  const { team, players, teamIndex } = props;
+  console.log(team);
+  console.log(players);
+  console.log(teamIndex);
   const classes = useStyles();
+
+  useEffect(() => {}, [props]);
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textPrimary" gutterBottom>
-          {team.toString()}
+          <div className="team-header">
+            {team.toString()}
+            <UtilitiesContext.Consumer>
+              {(deleteUtility) =>
+                deleteUtility && (
+                  <>
+                    <Button
+                      onClick={() => {
+                        deleteUtility.deleteEntity(teamIndex, 'teams');
+                      }}
+                      variant="contained"
+                      color="secondary"
+                      startIcon={<DeleteIcon />}
+                    >
+                      Delete Team
+                    </Button>
+                  </>
+                )
+              }
+            </UtilitiesContext.Consumer>
+          </div>
         </Typography>
-        <Typography className={classes.subtitle}>Players</Typography>
-        {players.map((player, idx) => {
-          return <div key={idx}>{player.player_name}</div>;
-        })}
+        <TableContainer component={Paper}>
+          <table>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  style={{
+                    width: '30vw',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Player Name
+                </TableCell>
+                <TableCell
+                  style={{
+                    width: '30vw',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  Remove Player From Team
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {players.map((player, idx) => {
+                return (
+                  <TableRow key={idx}>
+                    <TableCell
+                      style={{ textAlign: 'center' }}
+                      component="th"
+                      scope="row"
+                    >
+                      {player.player_name}
+                    </TableCell>
+                    <TableCell style={{ textAlign: 'center' }}>
+                      <UtilitiesContext.Consumer>
+                        {(deleteUtility) =>
+                          deleteUtility && (
+                            <>
+                              <IconButton
+                                onClick={() => {
+                                  deleteUtility.deleteEntity(
+                                    teamIndex,
+                                    'teams',
+                                  );
+                                }}
+                                aria-label="delete"
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </>
+                          )
+                        }
+                      </UtilitiesContext.Consumer>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </table>
+        </TableContainer>
       </CardContent>
     </Card>
   );

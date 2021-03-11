@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -28,16 +28,19 @@ function App({}: AppProps) {
   const [alertOpen, setAlertOpen] = useState(false);
   const [teams, setTeams] = useState({} as TeamsObject[]);
   const [playerTeams, setPlayerTeams] = useState({});
-  const teamLength = Object.keys(teams).length;
-  const playerLength = Object.keys(players).length;
+  let teamLength = Object.keys(teams).length;
+  let playerLength = Object.keys(players).length;
 
   //takes in a term such as player/team and an id then performs delete
   const deleteEntity = (id: number, term: string) => {
+    console.log(id, term);
     if (term) {
       axios
         .delete(`http://localhost:3000/${term}/${id}`)
         .then((res) => {
           getPlayers();
+          getTeams();
+          buildPlayerTeams();
           setAlertOpen(true);
         })
         .catch((err) => {
@@ -53,6 +56,7 @@ function App({}: AppProps) {
 
   //getters for main entities
   const getTeams = () => {
+    console.log('trigger 1');
     axios.get('http://localhost:3000/teams').then((res: AxiosResponse) => {
       const data: Array<TeamsObject> = res.data;
       setTeams(data);
@@ -60,37 +64,37 @@ function App({}: AppProps) {
   };
 
   const getPlayers = () => {
+    console.log('trigger 2');
     axios.get('http://localhost:3000/players').then((res: AxiosResponse) => {
       const data: Array<PlayerObject> = res.data;
       setPlayers(data);
     });
   };
 
-  //currently unused -- TODO Consider Removal
-  const getPlayersByTeamId = (id: number) => {
-    axios.get(`localhost:3000/teams/${id}`).then((res) => {
-      console.log(res);
-    });
-  };
-
   //helper function to build an object containing players and the teams they belong to
   const buildPlayerTeams = () => {
+    console.log('trigger 3');
     let playerTeamObj: PlayerTeamObj = {};
     for (let keys in teams) {
       const teamNames = teams[keys].team_name;
-      playerTeamObj[teamNames] = [];
+      playerTeamObj[teamNames] = {
+        teamID: teams[keys].id,
+        players: [],
+      };
     }
     addPlayersToTeams(playerTeamObj);
   };
 
   //helper function responsible for adding each player to a team
   const addPlayersToTeams = (playerTeams: PlayerTeamObj) => {
+    console.log('trigger 4');
     const tempPlayerTeams = playerTeams;
     for (let key in players) {
       const playerTeamNames = players[key].team_name;
       if (tempPlayerTeams.hasOwnProperty(playerTeamNames)) {
-        tempPlayerTeams[playerTeamNames].push(players[key]);
+        tempPlayerTeams[playerTeamNames].players.push(players[key]);
       }
+      console.log(tempPlayerTeams);
     }
     setPlayerTeams(tempPlayerTeams);
   };
@@ -111,9 +115,7 @@ function App({}: AppProps) {
       <TeamsContext.Provider value={{ teams, setTeams }}>
         <PlayersContext.Provider value={{ players, setPlayers }}>
           <PlayerTeamsContext.Provider value={{ playerTeams, setPlayerTeams }}>
-            <UtilitiesContext.Provider
-              value={{ deleteEntity, createPlayer, getPlayersByTeamId }}
-            >
+            <UtilitiesContext.Provider value={{ deleteEntity, createPlayer }}>
               <Navbar />
               <div className="container">
                 <Switch>
@@ -126,7 +128,7 @@ function App({}: AppProps) {
                   onClose={handleAlertClose}
                 >
                   <Alert severity="success" onClose={handleAlertClose}>
-                    Player Deleted
+                    Successfully Deleted
                   </Alert>
                 </Snackbar>
               </div>

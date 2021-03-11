@@ -14,7 +14,16 @@ const Teams: any = () => {
 
   return Object.keys(playerTeams.playerTeams).length > 1 ? (
     Object.entries(playerTeams.playerTeams).map(([team, players], idx) => {
-      return <TeamPlayerCard key={idx} team={team} players={players} />;
+      return (
+        <div className="teamPlayerTable">
+          <TeamPlayerCard
+            key={idx}
+            team={team}
+            teamIndex={players.teamID}
+            players={players.players}
+          />
+        </div>
+      );
     })
   ) : (
     <h4>Loading...</h4>

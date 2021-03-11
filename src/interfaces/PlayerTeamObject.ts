@@ -1,5 +1,8 @@
 export interface PlayerTeamObj {
-  [key: string]: Player[];
+  [key: string]: {
+    teamID: number;
+    players: Player[];
+  };
 }
 
 export interface Player {
