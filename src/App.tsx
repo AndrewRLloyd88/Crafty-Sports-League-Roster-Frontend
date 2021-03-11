@@ -25,12 +25,20 @@ function App({}: AppProps) {
   //takes in a term such as player/team and an id then performs delete
   const deleteEntity = (id: number, term: string) => {
     if (term) {
-      axios.delete(`http://localhost:3000/${term}/${id}`).then((res) => {
-        console.log(res);
-        getPlayers();
-        setAlertOpen(true);
-      });
+      axios
+        .delete(`http://localhost:3000/${term}/${id}`)
+        .then((res) => {
+          getPlayers();
+          setAlertOpen(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+  };
+
+  const createEntity = (playerName: string, teamName: string) => {
+    console.log(playerName, teamName);
   };
 
   const getPlayers = () => {
@@ -52,7 +60,7 @@ function App({}: AppProps) {
   return (
     <BrowserRouter>
       <PlayersContext.Provider value={{ players, setPlayers }}>
-        <UtilitiesContext.Provider value={{ deleteEntity }}>
+        <UtilitiesContext.Provider value={{ deleteEntity, createEntity }}>
           <Navbar />
           <div className="container">
             <Switch>
