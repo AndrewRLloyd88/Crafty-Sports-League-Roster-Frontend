@@ -1,5 +1,4 @@
 import React from 'react';
-import type { PlayerObject } from '../interfaces/PlayerObject';
 import TableCell from '@material-ui/core/TableCell';
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';

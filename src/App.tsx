@@ -9,11 +9,6 @@ import Teams from './components/Teams';
 import Players from './components/Players';
 import Navbar from './components/Navbar';
 
-//import interfaces
-import type { PlayerObject } from './interfaces/PlayerObject';
-import type { TeamsObject } from './interfaces/TeamsObject';
-import type { PlayerTeamObj } from './interfaces/PlayerTeamObject';
-
 //import context
 import { PlayersContext } from './data/PlayersContext';
 import { TeamsContext } from './data/TeamsContext';

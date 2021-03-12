@@ -1,9 +1,3 @@
-import React, { createContext, Dispatch, SetStateAction } from 'react';
-import type { PlayerObject } from '../interfaces/PlayerObject';
+import { createContext, Dispatch, SetStateAction } from 'react';
 
-interface ContextState {
-  players: Array<PlayerObject>;
-  setPlayers: Dispatch<SetStateAction<any>>;
-}
-
-export const PlayersContext = createContext<ContextState>({} as ContextState);
+export const PlayersContext = createContext<Players>({} as Players);
