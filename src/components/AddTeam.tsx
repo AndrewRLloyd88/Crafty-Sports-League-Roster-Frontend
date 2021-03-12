@@ -14,7 +14,6 @@ import type { ChangeEvent } from 'react';
 //import context
 import { TeamsContext } from '../data/TeamsContext';
 import { UtilitiesContext } from '../data/UtilitiesContext';
-import { fireEvent } from '@testing-library/dom';
 
 const useStyles = makeStyles({
   root: {
