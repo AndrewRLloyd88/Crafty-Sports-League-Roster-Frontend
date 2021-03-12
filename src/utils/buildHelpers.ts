@@ -1,5 +1,6 @@
 //helper function to build an object containing players and the teams they belong to
 const buildPlayerTeams = (teams: TeamsObject[], players: PlayerObject[]) => {
+  console.log('setting teams');
   let playerTeamObj: PlayerTeamObj = {};
   for (let keys in teams) {
     const teamNames = teams[keys].team_name;
@@ -16,6 +17,7 @@ const addPlayersToTeams = (
   playerTeams: PlayerTeamObj,
   players: PlayerObject[],
 ): PlayerTeamObj => {
+  console.log('adding players');
   const tempPlayerTeams = playerTeams;
   for (let key in players) {
     const playerTeamNames = players[key].team_name;

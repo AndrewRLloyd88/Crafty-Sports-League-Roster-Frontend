@@ -17,12 +17,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 //import context
 import { UtilitiesContext } from '../data/UtilitiesContext';
+import { PlayerTeamsContext } from '../data/PlayerTeamsContext';
 
 //props
 interface Props {
   team: string;
   players: PlayerObject[];
-  teamIndex: number;
+  teamIndex: number | null;
 }
 
 //style for table
@@ -46,8 +47,9 @@ const useStyles = makeStyles({
 const TeamPlayerCard = (props: Props) => {
   const { team, players, teamIndex } = props;
   const classes = useStyles();
+  const playerTeams = useContext(PlayerTeamsContext);
 
-  useEffect(() => {}, [props]);
+  useEffect(() => {}, [playerTeams.playerTeams]);
 
   return (
     <Card>
@@ -114,14 +116,14 @@ const TeamPlayerCard = (props: Props) => {
                     </TableCell>
                     <TableCell style={{ textAlign: 'center' }}>
                       <UtilitiesContext.Consumer>
-                        {(deleteUtility) =>
-                          deleteUtility && (
+                        {(updateUtility) =>
+                          updateUtility && (
                             <>
                               <IconButton
                                 onClick={() => {
-                                  deleteUtility.deleteEntity(
-                                    teamIndex,
-                                    'teams',
+                                  updateUtility.updatePlayerTeam(
+                                    player.id,
+                                    null,
                                   );
                                 }}
                                 aria-label="delete"

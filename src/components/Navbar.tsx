@@ -15,6 +15,7 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
+import GroupIcon from '@material-ui/icons/Group';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -101,7 +102,7 @@ const Navbar = () => {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Crafty MotorSports League Roster
+            Crafty Motorsports League Roster
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -128,7 +129,7 @@ const Navbar = () => {
           <Link to="/">
             <ListItemText>
               <Button color="secondary" onClick={toggleDrawer}>
-                <HomeIcon /> Home
+                <GroupIcon /> Teams
               </Button>
             </ListItemText>
           </Link>

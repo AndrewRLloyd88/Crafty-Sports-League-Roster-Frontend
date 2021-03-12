@@ -6,7 +6,7 @@ interface PlayerObject {
 
 interface PlayerTeamObj {
   [key: string]: {
-    teamID: number;
+    teamID: number | null;
     players: Player[];
   };
 }
@@ -38,6 +38,7 @@ interface PlayerTeamInterface {
 }
 
 interface UtilObject {
-  deleteEntity: (id: number, term: string) => void;
+  deleteEntity: (id: number | null, term: string) => void;
   createPlayer: (playerName: string, teamID: number) => void;
+  updatePlayerTeam: (player_id: number, team_id: number | null) => void;
 }
