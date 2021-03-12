@@ -25,6 +25,7 @@ const App = () => {
   const [teams, setTeams] = useState({} as TeamsObject[]);
   const [playerTeams, setPlayerTeams] = useState({});
   const [update, setUpdate] = useState(false);
+  const [alertAction, setAlertAction] = useState('');
   let teamLength = Object.keys(teams).length;
   let playerLength = Object.keys(players).length;
 
@@ -46,8 +47,18 @@ const App = () => {
   };
 
   //setters
-  const createPlayer = (playerName: string, teamID: number) => {
-    console.log(playerName, teamID);
+  const createPlayer = (playerName: string, teamID: number | null) => {
+    axios
+      .post('http://localhost:3000/players', {
+        playerName,
+        teamID,
+      })
+      .then((res: AxiosResponse) => {
+        const data: Array<PlayerObject> = res.data;
+        setPlayers(data);
+        setAlertAction('Added');
+        setAlertOpen(true);
+      });
   };
 
   //update methods
@@ -62,19 +73,13 @@ const App = () => {
         getPlayers();
         getTeams();
         setUpdate(true);
+        setAlertAction('Removed');
         setAlertOpen(true);
         setUpdate(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const updatePlayerName = (player_id: number, player_name: number | null) => {
-    axios.put(`http://localhost:3000/players/update/team`, {
-      player_id,
-      player_name,
-    });
   };
 
   //takes in a term such as player/team and an id then performs delete
@@ -86,6 +91,7 @@ const App = () => {
           getPlayers();
           getTeams();
           setPlayerTeams(buildPlayerTeams(teams, players));
+          setAlertAction('Deleted');
           setAlertOpen(true);
         })
         .catch((err) => {
@@ -137,7 +143,7 @@ const App = () => {
                   onClose={handleAlertClose}
                 >
                   <Alert severity="success" onClose={handleAlertClose}>
-                    Successfully Deleted
+                    Successfully {alertAction}
                   </Alert>
                 </Snackbar>
               </div>
