@@ -15,9 +15,10 @@ import { TeamsContext } from './data/TeamsContext';
 import { UtilitiesContext } from './data/UtilitiesContext';
 import { PlayerTeamsContext } from './data/PlayerTeamsContext';
 
-interface AppProps {}
+//import helpers
+import { buildPlayerTeams } from './utils/buildHelpers';
 
-function App({}: AppProps) {
+const App = () => {
   //states
   const [players, setPlayers] = useState({} as PlayerObject[]);
   const [alertOpen, setAlertOpen] = useState(false);
@@ -35,7 +36,7 @@ function App({}: AppProps) {
         .then((res) => {
           getPlayers();
           getTeams();
-          buildPlayerTeams();
+          setPlayerTeams(buildPlayerTeams(teams, players));
           setAlertOpen(true);
         })
         .catch((err) => {
@@ -64,33 +65,6 @@ function App({}: AppProps) {
     });
   };
 
-  //helper function to build an object containing players and the teams they belong to
-  const buildPlayerTeams = () => {
-    let playerTeamObj: PlayerTeamObj = {};
-    for (let keys in teams) {
-      const teamNames = teams[keys].team_name;
-      playerTeamObj[teamNames] = {
-        teamID: teams[keys].id,
-        players: [],
-      };
-    }
-    addPlayersToTeams(playerTeamObj);
-  };
-
-  //helper function responsible for adding each player to a team
-  const addPlayersToTeams = (playerTeams: PlayerTeamObj) => {
-    const tempPlayerTeams = playerTeams;
-    for (let key in players) {
-      const playerTeamNames = players[key].team_name;
-      const playerData = players[key];
-
-      if (tempPlayerTeams.hasOwnProperty(playerTeamNames)) {
-        tempPlayerTeams[playerTeamNames].players.push(playerData);
-      }
-    }
-    setPlayerTeams(tempPlayerTeams);
-  };
-
   //Alert logic
   const handleAlertClose = () => {
     setAlertOpen(false);
@@ -99,7 +73,7 @@ function App({}: AppProps) {
   useEffect(() => {
     getTeams();
     getPlayers();
-    buildPlayerTeams();
+    setPlayerTeams(buildPlayerTeams(teams, players));
   }, [teamLength, playerLength]);
 
   return (
@@ -130,6 +104,6 @@ function App({}: AppProps) {
       </TeamsContext.Provider>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
