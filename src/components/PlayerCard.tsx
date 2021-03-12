@@ -13,9 +13,16 @@ interface Props {
 
 const PlayerCard = (props: Props) => {
   const [addPlayerToTeam, setAddPlayerToTeam] = useState(false);
+  const [teamId, setTeamId] = useState(0);
   const teams = useContext(TeamsContext);
   const updateUtility = useContext(UtilitiesContext);
   const { player_name, team_name, id } = props.player;
+
+  const changeTeam = (id: string) => {
+    const numID = parseInt(id);
+    setTeamId(numID);
+  };
+
   return (
     <>
       <TableCell style={{ textAlign: 'center' }} component="th" scope="row">
@@ -32,7 +39,8 @@ const PlayerCard = (props: Props) => {
               id="teams"
               onChange={(event) => {
                 const teamId = event.target.value;
-                updateUtility.updatePlayerTeam(player.id, teamId);
+                changeTeam(teamId);
+                console.log(teamId);
               }}
             >
               <option key={0} value={0}>
@@ -47,7 +55,17 @@ const PlayerCard = (props: Props) => {
               })}
             </select>
             <div className="button-group">
-              <button className="confirm">Confirm</button>
+              <button
+                onClick={() => {
+                  console.log('logging out input');
+                  console.log(id, player_name);
+                  setAddPlayerToTeam(false);
+                  updateUtility.updatePlayerTeam(id, teamId);
+                }}
+                className="confirm"
+              >
+                Confirm
+              </button>
               <button
                 onClick={() => {
                   setAddPlayerToTeam(false);
