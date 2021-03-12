@@ -63,6 +63,7 @@ const App = () => {
         getTeams();
         setUpdate(true);
         setAlertOpen(true);
+        setUpdate(false);
       })
       .catch((err) => {
         console.log(err);
@@ -103,7 +104,7 @@ const App = () => {
       setPlayerTeams(buildPlayerTeams(teams, players));
     };
 
-    if (alertOpen) {
+    if (alertOpen && update) {
       rebuildPlayerTeam();
     }
 
