@@ -41,4 +41,6 @@ interface UtilObject {
   deleteEntity: (id: number | null, term: string) => void;
   createPlayer: (playerName: string, teamID: number | null) => void;
   updatePlayerTeam: (player_id: number, team_id: number | null) => void;
+  createTeam: (teamName: string) => void;
+  handleErrorAlertOpen: (entity: string) => void;
 }

@@ -14,6 +14,7 @@ import type { ChangeEvent } from 'react';
 //import context
 import { TeamsContext } from '../data/TeamsContext';
 import { UtilitiesContext } from '../data/UtilitiesContext';
+import { fireEvent } from '@testing-library/dom';
 
 const useStyles = makeStyles({
   root: {
@@ -23,52 +24,57 @@ const useStyles = makeStyles({
   },
 });
 
-const AddPlayer = () => {
-  const [isAddingPlayer, setIsAddingPlayer] = useState(false);
-  const [playerName, setPlayerName] = useState('');
-  const [teamId, setTeamId] = useState(0);
+const AddTeam = () => {
+  const [isAddingTeam, setIsAddingTeam] = useState(false);
+  const [teamName, setTeamName] = useState('');
   const teams = useContext(TeamsContext);
   const utilites = useContext(UtilitiesContext);
   const classes = useStyles();
 
-  const toggleAddPlayer = () => {
-    setIsAddingPlayer(!isAddingPlayer);
+  const toggleAddTeam = () => {
+    setIsAddingTeam(!isAddingTeam);
   };
 
-  // watches for changes from the player name input field
+  // watches for changes from the Team name input field
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event) {
-      setPlayerName(event.target.value);
+      setTeamName(event.target.value);
     }
+  };
+
+  const checkIfDuplicateName = (teamName: string): boolean => {
+    const teamNames = teams.teams;
+    for (let key in teamNames) {
+      const team = teamNames[key];
+      if (team.team_name === teamName) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const handleSubmit = (
     event: React.FormEvent<HTMLFormElement>,
-    playerName: string,
-    teamId: number | null,
+    teamName: string,
   ) => {
     event.preventDefault();
+    if (checkIfDuplicateName(teamName)) {
+      utilites.handleErrorAlertOpen('team');
+      return;
+    }
+    utilites.createTeam(teamName);
 
-    teamId === 0
-      ? utilites.createPlayer(playerName, null)
-      : utilites.createPlayer(playerName, teamId);
     resetAndHideForm();
   };
 
-  const changeTeam = (id: string) => {
-    const numID = parseInt(id);
-    setTeamId(numID);
-  };
-
   const resetAndHideForm = () => {
-    setIsAddingPlayer(false);
-    setPlayerName('');
-    setTeamId(0);
+    setIsAddingTeam(false);
+    setTeamName('');
   };
 
-  return isAddingPlayer ? (
+  return isAddingTeam ? (
     <TableContainer component={Paper}>
-      <form onSubmit={(event) => handleSubmit(event, playerName, teamId)}>
+      <form onSubmit={(event) => handleSubmit(event, teamName)}>
         <table>
           <TableHead>
             <TableRow>
@@ -79,17 +85,9 @@ const AddPlayer = () => {
                   fontWeight: 'bold',
                 }}
               >
-                Player Name
-              </TableCell>
-              <TableCell
-                style={{
-                  width: '30vw',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
                 Team Name
               </TableCell>
+
               <TableCell
                 style={{
                   width: '30vw',
@@ -120,38 +118,11 @@ const AddPlayer = () => {
                 }}
               >
                 <input
-                  value={playerName}
+                  value={teamName}
                   onChange={(event) => handleChange(event)}
-                  placeholder="Enter Player Name"
+                  placeholder="Enter Team name"
                   required={true}
                 ></input>
-              </TableCell>
-              <TableCell
-                style={{
-                  width: '30vw',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
-                <select
-                  name="teams"
-                  id="teams"
-                  onChange={(event) => {
-                    const teamId = event.target.value;
-                    changeTeam(teamId);
-                  }}
-                >
-                  <option key={0} value={0}>
-                    Unlisted
-                  </option>
-                  {teams.teams.map((team, idx) => {
-                    return (
-                      <option key={idx + 1} value={idx + 1}>
-                        {team.team_name}
-                      </option>
-                    );
-                  })}
-                </select>
               </TableCell>
               <TableCell
                 style={{
@@ -172,7 +143,7 @@ const AddPlayer = () => {
               >
                 <button
                   onClick={() => {
-                    toggleAddPlayer();
+                    toggleAddTeam();
                     resetAndHideForm();
                   }}
                 >
@@ -187,7 +158,7 @@ const AddPlayer = () => {
   ) : (
     <TableContainer
       component={Paper}
-      onClick={toggleAddPlayer}
+      onClick={toggleAddTeam}
       className={classes.root}
     >
       <table>
@@ -207,7 +178,7 @@ const AddPlayer = () => {
                 fontWeight: 'bold',
               }}
             >
-              Add Player
+              Add Team
             </TableCell>
             <TableCell
               style={{
@@ -223,4 +194,4 @@ const AddPlayer = () => {
   );
 };
 
-export default AddPlayer;
+export default AddTeam;

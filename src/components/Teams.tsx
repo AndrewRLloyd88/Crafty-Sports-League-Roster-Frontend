@@ -6,26 +6,34 @@ import { TeamsContext } from '../data/TeamsContext';
 import { UtilitiesContext } from '../data/UtilitiesContext';
 import { PlayerTeamsContext } from '../data/PlayerTeamsContext';
 
+//impot components
+import AddTeam from './AddTeam';
+
 const Teams: any = () => {
   const teams = useContext(TeamsContext);
   const utils = useContext(UtilitiesContext);
   const playerTeams = useContext(PlayerTeamsContext);
 
-  return Object.keys(playerTeams.playerTeams).length > 1 ? (
-    Object.entries(playerTeams.playerTeams).map(([team, players], idx) => {
-      return (
-        <div key={idx} className="teamPlayerTable">
-          <TeamPlayerCard
-            key={idx}
-            team={team}
-            teamIndex={players.teamID}
-            players={players.players}
-          />
-        </div>
-      );
-    })
-  ) : (
-    <h4>Loading...</h4>
+  return (
+    <>
+      <AddTeam />
+      {Object.keys(playerTeams.playerTeams).length > 1 ? (
+        Object.entries(playerTeams.playerTeams).map(([team, players], idx) => {
+          return (
+            <div key={`div + ${idx} `} className="teamPlayerTable">
+              <TeamPlayerCard
+                key={idx}
+                team={team}
+                teamIndex={players.teamID}
+                players={players.players}
+              />
+            </div>
+          );
+        })
+      ) : (
+        <h4>Loading...</h4>
+      )}
+    </>
   );
 };
 

@@ -22,10 +22,12 @@ const App = () => {
   //states
   const [players, setPlayers] = useState({} as PlayerObject[]);
   const [alertOpen, setAlertOpen] = useState(false);
+  const [errorAlertOpen, setErrorAlertOpen] = useState(false);
   const [teams, setTeams] = useState({} as TeamsObject[]);
   const [playerTeams, setPlayerTeams] = useState({});
   const [update, setUpdate] = useState(false);
   const [alertAction, setAlertAction] = useState('');
+  const [entity, setEntity] = useState('');
   let teamLength = Object.keys(teams).length;
   let playerLength = Object.keys(players).length;
 
@@ -59,6 +61,12 @@ const App = () => {
         setAlertAction('Added');
         setAlertOpen(true);
       });
+  };
+
+  const createTeam = (teamName: string) => {
+    setAlertAction('Added');
+    setAlertOpen(true);
+    console.log(teamName);
   };
 
   //update methods
@@ -105,6 +113,15 @@ const App = () => {
     setAlertOpen(false);
   };
 
+  const handleErrorAlertOpen = (entity: string) => {
+    setEntity(entity);
+    setErrorAlertOpen(true);
+  };
+
+  const handleErrorAlertClose = () => {
+    setErrorAlertOpen(false);
+  };
+
   useEffect(() => {
     const rebuildPlayerTeam = () => {
       setPlayerTeams(buildPlayerTeams(teams, players));
@@ -128,7 +145,9 @@ const App = () => {
               value={{
                 deleteEntity,
                 createPlayer,
+                createTeam,
                 updatePlayerTeam,
+                handleErrorAlertOpen,
               }}
             >
               <Navbar />
@@ -137,6 +156,7 @@ const App = () => {
                   <Route exact path="/" component={Teams} />
                   <Route exact path="/players" component={Players} />
                 </Switch>
+                {/* success alert */}
                 <Snackbar
                   open={alertOpen}
                   autoHideDuration={3000}
@@ -144,6 +164,16 @@ const App = () => {
                 >
                   <Alert severity="success" onClose={handleAlertClose}>
                     Successfully {alertAction}
+                  </Alert>
+                </Snackbar>
+                {/* error alert */}
+                <Snackbar
+                  open={errorAlertOpen}
+                  autoHideDuration={3000}
+                  onClose={handleErrorAlertClose}
+                >
+                  <Alert severity="error" onClose={handleErrorAlertClose}>
+                    A {entity} with that name already exists!
                   </Alert>
                 </Snackbar>
               </div>
