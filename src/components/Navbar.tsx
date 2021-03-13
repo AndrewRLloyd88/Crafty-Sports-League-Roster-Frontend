@@ -87,9 +87,7 @@ const Navbar = () => {
 
   const fetchResult = (term: string) => {
     axios
-      .get(
-        `https://crafty-sports-league-backend.herokuapp.com/players/search?name=${term}`,
-      )
+      .get(`http://localhost:3000/players/search?name=${term}`)
       .then((res) => {
         history.push({ pathname: '/player', state: res.data });
       });
