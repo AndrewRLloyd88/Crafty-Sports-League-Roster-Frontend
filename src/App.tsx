@@ -34,7 +34,6 @@ const App = () => {
 
   //getters for main entities
   const getTeams = () => {
-    console.log('get teams');
     axios
       .get('https://crafty-sports-league-backend.herokuapp.com/teams')
       .then((res: AxiosResponse) => {
@@ -44,7 +43,6 @@ const App = () => {
   };
 
   const getPlayers = () => {
-    console.log('get players');
     axios
       .get('https://crafty-sports-league-backend.herokuapp.com/players')
       .then((res: AxiosResponse) => {
