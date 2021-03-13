@@ -55,10 +55,7 @@ const AddTeam = () => {
     return false;
   };
 
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    teamName: string,
-  ) => {
+  const handleSubmit = (event: any, teamName: string) => {
     event.preventDefault();
     if (checkIfDuplicateName(teamName)) {
       utilites.handleErrorAlertOpen('team');
@@ -137,6 +134,7 @@ const AddTeam = () => {
                   variant="contained"
                   color="primary"
                   startIcon={<DoneOutlineIcon />}
+                  onClick={(event) => handleSubmit(event, teamName)}
                 >
                   Confirm
                 </Button>

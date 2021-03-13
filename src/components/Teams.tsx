@@ -13,7 +13,6 @@ const Teams: any = () => {
   const teams = useContext(TeamsContext);
   const utils = useContext(UtilitiesContext);
   const playerTeams = useContext(PlayerTeamsContext);
-  console.log(playerTeams);
 
   return (
     <>

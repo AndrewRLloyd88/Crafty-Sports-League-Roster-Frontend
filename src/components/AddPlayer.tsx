@@ -58,7 +58,7 @@ const AddPlayer = () => {
   };
 
   const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
+    event: any,
     playerName: string,
     teamId: number | null,
   ) => {
@@ -182,6 +182,9 @@ const AddPlayer = () => {
                 <Button
                   variant="contained"
                   color="primary"
+                  onClick={(event) => {
+                    handleSubmit(event, playerName, teamId);
+                  }}
                   startIcon={<DoneOutlineIcon />}
                 >
                   Confirm

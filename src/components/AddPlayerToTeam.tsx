@@ -47,11 +47,7 @@ const AddPlayerToTeam = (props: Props) => {
     setPlayerId(numID);
   };
 
-  const handleSubmit = (
-    event: React.FormEvent<HTMLFormElement>,
-    playerId: number,
-    teamID: number,
-  ) => {
+  const handleSubmit = (event: any, playerId: number, teamID: number) => {
     event.preventDefault();
     utilites.updatePlayerTeam(playerId, teamID, 'Added');
 
@@ -68,7 +64,6 @@ const AddPlayerToTeam = (props: Props) => {
     playerArray.forEach((player) => {
       if (player.team_name === null) {
         teamlessPlayers.push(player);
-        console.log(teamlessPlayers);
       }
     });
     setPlayersWithNoTeam(teamlessPlayers);
@@ -151,6 +146,9 @@ const AddPlayerToTeam = (props: Props) => {
                   variant="contained"
                   color="primary"
                   startIcon={<DoneOutlineIcon />}
+                  onClick={(event) =>
+                    handleSubmit(event, playerId, props.teamID)
+                  }
                 >
                   Confirm
                 </Button>
