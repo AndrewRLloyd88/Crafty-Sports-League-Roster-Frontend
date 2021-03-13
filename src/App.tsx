@@ -111,7 +111,9 @@ const App = () => {
   const deleteEntity = (id: number | null, term: string) => {
     if (term) {
       axios
-        .delete(`/${term}/${id}`)
+        .delete(
+          `https://crafty-sports-league-backend.herokuapp.com/${term}/${id}`,
+        )
         .then((res) => {
           getPlayers();
           getTeams();
