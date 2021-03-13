@@ -72,7 +72,13 @@ const App = () => {
   const createTeam = (teamName: string) => {
     setAlertAction('Added');
     setAlertOpen(true);
-    console.log(teamName);
+    axios
+      .post('https://crafty-sports-league-backend.herokuapp.com/teams', {
+        teamName,
+      })
+      .then((res) => {
+        setTeams(res.data);
+      });
   };
 
   //update methods
