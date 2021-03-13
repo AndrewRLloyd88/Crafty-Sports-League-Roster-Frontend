@@ -35,24 +35,28 @@ const App = () => {
   //getters for main entities
   const getTeams = () => {
     console.log('get teams');
-    axios.get('/teams').then((res: AxiosResponse) => {
-      const data: Array<TeamsObject> = res.data;
-      setTeams(data);
-    });
+    axios
+      .get('https://crafty-sports-league-backend.herokuapp.com/teams')
+      .then((res: AxiosResponse) => {
+        const data: Array<TeamsObject> = res.data;
+        setTeams(data);
+      });
   };
 
   const getPlayers = () => {
     console.log('get players');
-    axios.get('/players').then((res: AxiosResponse) => {
-      const data: Array<PlayerObject> = res.data;
-      setPlayers(data);
-    });
+    axios
+      .get('https://crafty-sports-league-backend.herokuapp.com/players')
+      .then((res: AxiosResponse) => {
+        const data: Array<PlayerObject> = res.data;
+        setPlayers(data);
+      });
   };
 
   //setters
   const createPlayer = (playerName: string, teamID: number | null) => {
     axios
-      .post('/players', {
+      .post('https://crafty-sports-league-backend.herokuapp.com/players', {
         playerName,
         teamID,
       })
@@ -79,10 +83,13 @@ const App = () => {
   ) => {
     setUpdate(true);
     axios
-      .put(`/players/update/team`, {
-        player_id,
-        team_id,
-      })
+      .put(
+        `https://crafty-sports-league-backend.herokuapp.com/players/update/team`,
+        {
+          player_id,
+          team_id,
+        },
+      )
       .then((res) => {
         getPlayers();
         getTeams();

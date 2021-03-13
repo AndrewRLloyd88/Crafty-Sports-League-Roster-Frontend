@@ -86,9 +86,13 @@ const Navbar = () => {
   const history = useHistory();
 
   const fetchResult = (term: string) => {
-    axios.get(`/players/search?name=${term}`).then((res) => {
-      history.push({ pathname: '/player', state: res.data });
-    });
+    axios
+      .get(
+        `https://crafty-sports-league-backend.herokuapp.com/players/search?name=${term}`,
+      )
+      .then((res) => {
+        history.push({ pathname: '/player', state: res.data });
+      });
   };
 
   const toggleDrawer = () => {
