@@ -17,6 +17,7 @@ import {
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import GroupIcon from '@material-ui/icons/Group';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,8 +80,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const fetchResult = (term: string) => {
+  axios.get(`http://localhost:3000/players?${term}`).then((res) => {
+    console.log(res);
+  });
+};
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [term, setTerm] = useState('');
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -109,13 +117,24 @@ const Navbar = () => {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search Players…"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={term}
+              onChange={(event) => {
+                setTerm(event.target.value);
+              }}
             />
+            <Button
+              onClick={() => {
+                fetchResult(term);
+              }}
+            >
+              Search
+            </Button>
           </div>
         </Toolbar>
       </AppBar>

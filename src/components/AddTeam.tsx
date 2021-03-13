@@ -22,6 +22,7 @@ const useStyles = makeStyles({
   root: {
     '&:hover': {
       backgroundColor: 'rgb(7, 177, 77, 0.42)',
+      cursor: 'pointer',
     },
   },
 });
