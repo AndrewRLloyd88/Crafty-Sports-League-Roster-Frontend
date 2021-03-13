@@ -34,19 +34,21 @@ const App = () => {
 
   //getters for main entities
   const getTeams = () => {
-    console.log('get teams');
-    axios.get('http://localhost:3000/teams').then((res: AxiosResponse) => {
-      const data: Array<TeamsObject> = res.data;
-      setTeams(data);
-    });
+    axios
+      .get('https://crafty-sports-league-backend.herokuapp.com/teams')
+      .then((res: AxiosResponse) => {
+        const data: Array<TeamsObject> = res.data;
+        setTeams(data);
+      });
   };
 
   const getPlayers = () => {
-    console.log('get players');
-    axios.get('http://localhost:3000/players').then((res: AxiosResponse) => {
-      const data: Array<PlayerObject> = res.data;
-      setPlayers(data);
-    });
+    axios
+      .get('https://crafty-sports-league-backend.herokuapp.com/players')
+      .then((res: AxiosResponse) => {
+        const data: Array<PlayerObject> = res.data;
+        setPlayers(data);
+      });
   };
 
   //setters
@@ -106,7 +108,9 @@ const App = () => {
   const deleteEntity = (id: number | null, term: string) => {
     if (term) {
       axios
-        .delete(`/${term}/${id}`)
+        .delete(
+          `https://crafty-sports-league-backend.herokuapp.com/${term}/${id}`,
+        )
         .then((res) => {
           getPlayers();
           getTeams();

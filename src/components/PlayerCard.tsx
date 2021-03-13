@@ -51,7 +51,7 @@ const PlayerCard = (props: Props) => {
               </option>
               {teams.teams.map((team, idx) => {
                 return (
-                  <option key={idx + 1} value={idx + 1}>
+                  <option key={idx + 1} value={team.id}>
                     {team.team_name}
                   </option>
                 );

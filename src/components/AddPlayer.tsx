@@ -19,6 +19,10 @@ import { TeamsContext } from '../data/TeamsContext';
 import { PlayersContext } from '../data/PlayersContext';
 import { UtilitiesContext } from '../data/UtilitiesContext';
 
+interface Props {
+  teamID: number;
+}
+
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -166,7 +170,7 @@ const AddPlayer = () => {
                   </option>
                   {teams.teams.map((team, idx) => {
                     return (
-                      <option key={idx + 1} value={idx + 1}>
+                      <option key={idx + 1} value={team.id}>
                         {team.team_name}
                       </option>
                     );
