@@ -7,6 +7,7 @@ import Alert from '@material-ui/lab/Alert';
 //import components
 import Teams from './components/Teams';
 import Players from './components/Players';
+import ShowPlayer from './components/ShowPlayer';
 import Navbar from './components/Navbar';
 
 //import context
@@ -63,6 +64,7 @@ const App = () => {
       });
   };
 
+  //create a team
   const createTeam = (teamName: string) => {
     setAlertAction('Added');
     setAlertOpen(true);
@@ -122,6 +124,7 @@ const App = () => {
     setErrorAlertOpen(true);
   };
 
+  //error card
   const handleErrorAlertClose = () => {
     setErrorAlertOpen(false);
   };
@@ -159,6 +162,7 @@ const App = () => {
                 <Switch>
                   <Route exact path="/" component={Teams} />
                   <Route exact path="/players" component={Players} />
+                  <Route exact path="/player" component={ShowPlayer} />
                 </Switch>
                 {/* success alert */}
                 <Snackbar

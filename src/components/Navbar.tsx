@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import GroupIcon from '@material-ui/icons/Group';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -80,15 +80,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const fetchResult = (term: string) => {
-  axios.get(`http://localhost:3000/players?${term}`).then((res) => {
-    console.log(res);
-  });
-};
-
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [term, setTerm] = useState('');
+  const history = useHistory();
+
+  const fetchResult = (term: string) => {
+    axios
+      .get(`http://localhost:3000/players/search?name=${term}`)
+      .then((res) => {
+        history.push({ pathname: '/player', state: res.data });
+      });
+  };
 
   const toggleDrawer = () => {
     setOpen(!open);
