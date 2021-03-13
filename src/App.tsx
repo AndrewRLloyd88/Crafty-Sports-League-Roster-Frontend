@@ -35,7 +35,7 @@ const App = () => {
   //getters for main entities
   const getTeams = () => {
     console.log('get teams');
-    axios.get('http://localhost:3000/teams').then((res: AxiosResponse) => {
+    axios.get('/teams').then((res: AxiosResponse) => {
       const data: Array<TeamsObject> = res.data;
       setTeams(data);
     });
@@ -43,7 +43,7 @@ const App = () => {
 
   const getPlayers = () => {
     console.log('get players');
-    axios.get('http://localhost:3000/players').then((res: AxiosResponse) => {
+    axios.get('/players').then((res: AxiosResponse) => {
       const data: Array<PlayerObject> = res.data;
       setPlayers(data);
     });
@@ -52,7 +52,7 @@ const App = () => {
   //setters
   const createPlayer = (playerName: string, teamID: number | null) => {
     axios
-      .post('http://localhost:3000/players', {
+      .post('/players', {
         playerName,
         teamID,
       })
@@ -79,7 +79,7 @@ const App = () => {
   ) => {
     setUpdate(true);
     axios
-      .put(`http://localhost:3000/players/update/team`, {
+      .put(`/players/update/team`, {
         player_id,
         team_id,
       })
@@ -100,7 +100,7 @@ const App = () => {
   const deleteEntity = (id: number | null, term: string) => {
     if (term) {
       axios
-        .delete(`http://localhost:3000/${term}/${id}`)
+        .delete(`/${term}/${id}`)
         .then((res) => {
           getPlayers();
           getTeams();

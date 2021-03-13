@@ -86,11 +86,9 @@ const Navbar = () => {
   const history = useHistory();
 
   const fetchResult = (term: string) => {
-    axios
-      .get(`http://localhost:3000/players/search?name=${term}`)
-      .then((res) => {
-        history.push({ pathname: '/player', state: res.data });
-      });
+    axios.get(`/players/search?name=${term}`).then((res) => {
+      history.push({ pathname: '/player', state: res.data });
+    });
   };
 
   const toggleDrawer = () => {
