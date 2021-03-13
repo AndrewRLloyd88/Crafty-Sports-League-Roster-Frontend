@@ -40,7 +40,6 @@ const PlayerCard = (props: Props) => {
               onChange={(event) => {
                 const teamId = event.target.value;
                 changeTeam(teamId);
-                console.log(teamId);
               }}
             >
               <option key={0} value={0}>
@@ -57,10 +56,8 @@ const PlayerCard = (props: Props) => {
             <div className="button-group">
               <button
                 onClick={() => {
-                  console.log('logging out input');
-                  console.log(id, player_name);
                   setAddPlayerToTeam(false);
-                  updateUtility.updatePlayerTeam(id, teamId);
+                  updateUtility.updatePlayerTeam(id, teamId, 'Added');
                 }}
                 className="confirm"
               >

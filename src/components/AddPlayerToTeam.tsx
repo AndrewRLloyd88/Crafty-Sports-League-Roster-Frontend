@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,12 +11,14 @@ import Button from '@material-ui/core/Button';
 import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-//import types
-import type { ChangeEvent } from 'react';
-
 //import context
+import { PlayersContext } from '../data/PlayersContext';
 import { TeamsContext } from '../data/TeamsContext';
 import { UtilitiesContext } from '../data/UtilitiesContext';
+
+interface Props {
+  teamID: number;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -26,57 +28,61 @@ const useStyles = makeStyles({
   },
 });
 
-const AddTeam = () => {
-  const [isAddingTeam, setIsAddingTeam] = useState(false);
-  const [teamName, setTeamName] = useState('');
+const AddPlayerToTeam = (props: Props) => {
+  const [isAddingPlayer, setIsAddingPlayer] = useState(false);
+  const [playerId, setPlayerId] = useState(0);
+  const [playersWithNoTeam, setPlayersWithNoTeam] = useState<Player[]>([]);
+  const players = useContext(PlayersContext);
   const teams = useContext(TeamsContext);
   const utilites = useContext(UtilitiesContext);
   const classes = useStyles();
 
-  const toggleAddTeam = () => {
-    setIsAddingTeam(!isAddingTeam);
+  const toggleAddPlayer = () => {
+    setIsAddingPlayer(!isAddingPlayer);
   };
 
-  // watches for changes from the Team name input field
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event) {
-      setTeamName(event.target.value);
-    }
-  };
-
-  const checkIfDuplicateName = (teamName: string): boolean => {
-    const teamNames = teams.teams;
-    for (let key in teamNames) {
-      const team = teamNames[key];
-      if (team.team_name === teamName) {
-        return true;
-      }
-    }
-    return false;
+  //handles changing player in the select
+  const changePlayer = (id: string) => {
+    const numID = parseInt(id);
+    setPlayerId(numID);
   };
 
   const handleSubmit = (
     event: React.FormEvent<HTMLFormElement>,
-    teamName: string,
+    playerId: number,
+    teamID: number,
   ) => {
     event.preventDefault();
-    if (checkIfDuplicateName(teamName)) {
-      utilites.handleErrorAlertOpen('team');
-      return;
-    }
-    utilites.createTeam(teamName);
+    utilites.updatePlayerTeam(playerId, teamID, 'Added');
 
     resetAndHideForm();
   };
 
   const resetAndHideForm = () => {
-    setIsAddingTeam(false);
-    setTeamName('');
+    setIsAddingPlayer(false);
   };
 
-  return isAddingTeam ? (
+  const findPlayersWithoutTeam = () => {
+    const teamlessPlayers: Player[] = [];
+    const playerArray = players.players;
+    playerArray.forEach((player) => {
+      if (player.team_name === null) {
+        teamlessPlayers.push(player);
+        console.log(teamlessPlayers);
+      }
+    });
+    setPlayersWithNoTeam(teamlessPlayers);
+  };
+
+  useEffect(() => {
+    if (players.players.length > 1) {
+      findPlayersWithoutTeam();
+    }
+  }, []);
+
+  return isAddingPlayer ? (
     <TableContainer component={Paper}>
-      <form onSubmit={(event) => handleSubmit(event, teamName)}>
+      <form onSubmit={(event) => handleSubmit(event, playerId, props.teamID)}>
         <table>
           <TableHead>
             <TableRow>
@@ -87,7 +93,7 @@ const AddTeam = () => {
                   fontWeight: 'bold',
                 }}
               >
-                Team Name
+                Player Name
               </TableCell>
 
               <TableCell
@@ -119,12 +125,20 @@ const AddTeam = () => {
                   fontWeight: 'bold',
                 }}
               >
-                <input
-                  value={teamName}
-                  onChange={(event) => handleChange(event)}
-                  placeholder="Enter Team name"
-                  required={true}
-                ></input>
+                <select
+                  onChange={(event) => {
+                    const playerId = event.target.value;
+                    changePlayer(playerId);
+                  }}
+                >
+                  {playersWithNoTeam.map((player, idx) => {
+                    return (
+                      <option key={idx + 1} value={player.id}>
+                        {player.player_name}
+                      </option>
+                    );
+                  })}
+                </select>
               </TableCell>
               <TableCell
                 style={{
@@ -154,7 +168,7 @@ const AddTeam = () => {
                   color="secondary"
                   startIcon={<CancelIcon />}
                   onClick={() => {
-                    toggleAddTeam();
+                    toggleAddPlayer();
                     resetAndHideForm();
                   }}
                 >
@@ -169,7 +183,10 @@ const AddTeam = () => {
   ) : (
     <TableContainer
       component={Paper}
-      onClick={toggleAddTeam}
+      onClick={() => {
+        findPlayersWithoutTeam();
+        toggleAddPlayer();
+      }}
       className={classes.root}
     >
       <table>
@@ -189,7 +206,7 @@ const AddTeam = () => {
                 fontWeight: 'bold',
               }}
             >
-              Add Team
+              Add Player
             </TableCell>
             <TableCell
               style={{
@@ -205,4 +222,4 @@ const AddTeam = () => {
   );
 };
 
-export default AddTeam;
+export default AddPlayerToTeam;

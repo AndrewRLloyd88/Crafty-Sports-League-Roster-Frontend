@@ -7,6 +7,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 //import types
 import type { ChangeEvent } from 'react';
@@ -176,7 +179,13 @@ const AddPlayer = () => {
                   fontWeight: 'bold',
                 }}
               >
-                <button>Confirm</button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<DoneOutlineIcon />}
+                >
+                  Confirm
+                </Button>
               </TableCell>
 
               <TableCell
@@ -186,14 +195,17 @@ const AddPlayer = () => {
                   fontWeight: 'bold',
                 }}
               >
-                <button
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<CancelIcon />}
                   onClick={() => {
                     toggleAddPlayer();
                     resetAndHideForm();
                   }}
                 >
                   Cancel
-                </button>
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>

@@ -70,7 +70,11 @@ const App = () => {
   };
 
   //update methods
-  const updatePlayerTeam = (player_id: number, team_id: number | null) => {
+  const updatePlayerTeam = (
+    player_id: number,
+    team_id: number | null,
+    action: string,
+  ) => {
     setUpdate(true);
     axios
       .put(`http://localhost:3000/players/update/team`, {
@@ -81,7 +85,7 @@ const App = () => {
         getPlayers();
         getTeams();
         setUpdate(true);
-        setAlertAction('Removed');
+        setAlertAction(action);
         setAlertOpen(true);
         setUpdate(false);
       })

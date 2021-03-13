@@ -13,6 +13,7 @@ const Teams: any = () => {
   const teams = useContext(TeamsContext);
   const utils = useContext(UtilitiesContext);
   const playerTeams = useContext(PlayerTeamsContext);
+  console.log(playerTeams);
 
   return (
     <>
@@ -26,6 +27,7 @@ const Teams: any = () => {
                 team={team}
                 teamIndex={players.teamID}
                 players={players.players}
+                teamID={idx + 1}
               />
             </div>
           );

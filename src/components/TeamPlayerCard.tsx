@@ -24,7 +24,11 @@ interface Props {
   team: string;
   players: PlayerObject[];
   teamIndex: number | null;
+  teamID: number;
 }
+
+//components
+import AddPlayerToTeam from './AddPlayerToTeam';
 
 //style for table
 const useStyles = makeStyles({
@@ -45,7 +49,7 @@ const useStyles = makeStyles({
 });
 
 const TeamPlayerCard = (props: Props) => {
-  const { team, players, teamIndex } = props;
+  const { team, players, teamIndex, teamID } = props;
   const classes = useStyles();
   const playerTeams = useContext(PlayerTeamsContext);
 
@@ -79,6 +83,7 @@ const TeamPlayerCard = (props: Props) => {
             }
           </UtilitiesContext.Consumer>
         </Typography>
+        <AddPlayerToTeam teamID={teamID} />
         <TableContainer component={Paper}>
           <table>
             <TableHead>
@@ -124,6 +129,7 @@ const TeamPlayerCard = (props: Props) => {
                                   updateUtility.updatePlayerTeam(
                                     player.id,
                                     null,
+                                    'Removed',
                                   );
                                 }}
                                 aria-label="delete"

@@ -44,7 +44,7 @@ const Players = () => {
                     fontWeight: 'bold',
                   }}
                 >
-                  Remove Player
+                  Delete Player
                 </TableCell>
               </TableRow>
             </TableHead>
