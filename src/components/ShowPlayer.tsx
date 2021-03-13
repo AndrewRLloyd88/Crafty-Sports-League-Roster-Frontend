@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 
 interface Location {
   pathname: string;
@@ -17,11 +16,9 @@ interface Location {
 const ShowPlayer = () => {
   const location: Location = useLocation();
   const [results, setResults] = useState<[Player]>([{} as Player]);
-  console.log(location.state);
 
   useEffect(() => {
     setResults(location.state);
-    console.log(location);
   }, [location]);
 
   return results && results.length > 0 ? (

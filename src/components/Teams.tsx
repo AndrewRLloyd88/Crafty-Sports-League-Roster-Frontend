@@ -2,16 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import TeamPlayerCard from './TeamPlayerCard';
 
 //import contexts
-import { TeamsContext } from '../data/TeamsContext';
-import { UtilitiesContext } from '../data/UtilitiesContext';
 import { PlayerTeamsContext } from '../data/PlayerTeamsContext';
 
 //impot components
 import AddTeam from './AddTeam';
 
 const Teams: any = () => {
-  const teams = useContext(TeamsContext);
-  const utils = useContext(UtilitiesContext);
   const playerTeams = useContext(PlayerTeamsContext);
 
   return (
