@@ -9,6 +9,7 @@ import AddTeam from './AddTeam';
 
 const Teams: any = () => {
   const playerTeams = useContext(PlayerTeamsContext);
+  console.log(playerTeams);
 
   return (
     <>

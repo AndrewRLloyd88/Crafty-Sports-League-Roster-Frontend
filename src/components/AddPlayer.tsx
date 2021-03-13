@@ -19,6 +19,10 @@ import { TeamsContext } from '../data/TeamsContext';
 import { PlayersContext } from '../data/PlayersContext';
 import { UtilitiesContext } from '../data/UtilitiesContext';
 
+interface Props {
+  teamID: number;
+}
+
 const useStyles = makeStyles({
   root: {
     '&:hover': {

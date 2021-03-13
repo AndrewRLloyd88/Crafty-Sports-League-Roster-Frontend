@@ -23,6 +23,7 @@ const PlayerCard = (props: Props) => {
   const { player_name, team_name, id } = props.player;
 
   const changeTeam = (id: string) => {
+    console.log(id);
     const numID = parseInt(id);
     setTeamId(numID);
   };
@@ -51,7 +52,7 @@ const PlayerCard = (props: Props) => {
               </option>
               {teams.teams.map((team, idx) => {
                 return (
-                  <option key={idx + 1} value={idx + 1}>
+                  <option key={idx + 1} value={team.id}>
                     {team.team_name}
                   </option>
                 );

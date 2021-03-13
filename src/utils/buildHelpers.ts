@@ -3,10 +3,13 @@ const buildPlayerTeams = (teams: TeamsObject[], players: PlayerObject[]) => {
   let playerTeamObj: PlayerTeamObj = {};
   for (let keys in teams) {
     const teamNames = teams[keys].team_name;
-    playerTeamObj[teamNames] = {
+    (playerTeamObj[teamNames] = {
       teamID: teams[keys].id,
       players: [],
-    };
+    }),
+      {
+        teamID: teams[keys].id,
+      };
   }
   return addPlayersToTeams(playerTeamObj, players);
 };
