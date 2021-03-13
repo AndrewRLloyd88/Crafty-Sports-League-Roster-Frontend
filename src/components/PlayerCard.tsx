@@ -23,7 +23,6 @@ const PlayerCard = (props: Props) => {
   const { player_name, team_name, id } = props.player;
 
   const changeTeam = (id: string) => {
-    console.log(id);
     const numID = parseInt(id);
     setTeamId(numID);
   };

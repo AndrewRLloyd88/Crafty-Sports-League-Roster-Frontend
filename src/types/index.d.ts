@@ -6,7 +6,7 @@ interface PlayerObject {
 
 interface PlayerTeamObj {
   [key: string]: {
-    teamID: number | null;
+    teamID: number;
     players: Player[];
   };
 }

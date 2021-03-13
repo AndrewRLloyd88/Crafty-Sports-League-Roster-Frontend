@@ -9,7 +9,6 @@ import AddTeam from './AddTeam';
 
 const Teams: any = () => {
   const playerTeams = useContext(PlayerTeamsContext);
-  console.log(playerTeams);
 
   return (
     <>
@@ -23,7 +22,6 @@ const Teams: any = () => {
                 team={team}
                 teamIndex={players.teamID}
                 players={players.players}
-                teamID={idx + 1}
               />
             </div>
           );

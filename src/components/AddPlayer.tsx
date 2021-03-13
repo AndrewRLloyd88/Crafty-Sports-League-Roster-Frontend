@@ -81,7 +81,6 @@ const AddPlayer = () => {
 
   const changeTeam = (id: string) => {
     const numID = parseInt(id);
-    console.log(numID);
     setTeamId(numID);
   };
 
