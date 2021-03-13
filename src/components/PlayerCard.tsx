@@ -2,6 +2,10 @@ import React, { useState, useContext } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import CancelIcon from '@material-ui/icons/Cancel';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 // import contexts
 import { TeamsContext } from '../data/TeamsContext';
@@ -54,7 +58,10 @@ const PlayerCard = (props: Props) => {
               })}
             </select>
             <div className="button-group">
-              <button
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<DoneOutlineIcon />}
                 onClick={() => {
                   setAddPlayerToTeam(false);
                   updateUtility.updatePlayerTeam(id, teamId, 'Added');
@@ -62,25 +69,31 @@ const PlayerCard = (props: Props) => {
                 className="confirm"
               >
                 Confirm
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<CancelIcon />}
                 onClick={() => {
                   setAddPlayerToTeam(false);
                 }}
                 className="cancel"
               >
                 Cancel
-              </button>
+              </Button>
             </div>
           </div>
         ) : (
-          <button
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddCircleIcon />}
             onClick={() => {
               setAddPlayerToTeam(true);
             }}
           >
             Add To Team
-          </button>
+          </Button>
         )}
       </TableCell>
       <TableCell style={{ textAlign: 'center' }}>
