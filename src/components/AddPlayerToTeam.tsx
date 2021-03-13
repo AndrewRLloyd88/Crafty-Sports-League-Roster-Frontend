@@ -178,7 +178,7 @@ const AddPlayerToTeam = (props: Props) => {
         </table>
       </form>
     </TableContainer>
-  ) : (
+  ) : playersWithNoTeam.length > 0 ? (
     <TableContainer
       component={Paper}
       onClick={() => {
@@ -217,7 +217,7 @@ const AddPlayerToTeam = (props: Props) => {
         </TableHead>
       </table>
     </TableContainer>
-  );
+  ) : null;
 };
 
 export default AddPlayerToTeam;
