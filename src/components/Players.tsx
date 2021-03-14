@@ -51,7 +51,7 @@ const Players = () => {
             <TableBody>
               <PlayersContext.Consumer>
                 {(players) =>
-                  players && (
+                  players.players.length > 1 ? (
                     <>
                       {players.players.map((player, idx) => {
                         return (
@@ -61,6 +61,8 @@ const Players = () => {
                         );
                       })}
                     </>
+                  ) : (
+                    <h4>Loading...</h4>
                   )
                 }
               </PlayersContext.Consumer>
